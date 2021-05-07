@@ -7,7 +7,7 @@ class Node:
       self.nome = name
       self.TarefasDoNode = tarefas
       self.distancia = math.inf
-      self.Visited = False
+      self.path = list()
 
 class Elo:
   def __init__(self, nodePai: Node, nodeFilho: Node, distancia: float):
@@ -35,15 +35,14 @@ class Grafo:
 
     self.choices = pd.pd(self.todasTarefas)
     self.choices.intervalSchWei()
-    for t in self.choices.final:
-      for x in t:
-        print(x.nome, end=" ")
-      print("\n---------")
-
+    
   def addNode(self, node: Node):
     self.nodes.append(node)
 
-  def getElos(self, node: Node): # TODO: Arrumar para aparecer ligações invertidas 
+  def getElos(self, node: Node):
+    """
+    Função para poder retornar os nodes que estão conectados ao um certo Node
+    """
     adjList = []
 
     for Elo in self.elos:
@@ -79,24 +78,34 @@ class Grafo:
         self.elos.append(Elo(currentNode, nextNode, distancia))
         self.elos.append(Elo(nextNode, currentNode, distancia))
   
-  def getDistance(self, nodeA:Node, nodeB:Node):
+  def getPath(self, nodeA:Node, nodeB:Node):
     for node in self.nodes:
       node.distancia = math.inf
+      node.path = list()
     
     self.bellmanFord(nodeA)
 
-    return self.nodes[self.nodes.index(nodeB)]
+    nodeB.path.append(nodeB)
+
+    return nodeB
 
 
   def bellmanFord(self, nodeComeco:Node):
     try: 
       self.nodes[self.nodes.index(nodeComeco)].distancia = 0
+      # self.nodes[self.nodes.index(nodeComeco)].path.append(nodeComeco) 
     except IndexError:
       print("Não tem esse node no grafo.")
       return None
     
-    for _ in range(len(self.nodes)):
+    for _ in range(len(self.nodes) - 1):
       for elo in self.elos:
         if elo.nodePai.distancia != math.inf and elo.nodePai.distancia + elo.distancia < elo.nodeFilho.distancia:
           elo.nodeFilho.distancia = elo.nodePai.distancia + elo.distancia
+          elo.nodeFilho.path += elo.nodePai.path
+          elo.nodeFilho.path.append(elo.nodePai)
 
+    for _ in range(len(self.nodes) - 1):
+      for elo in self.elos:
+        if elo.nodePai.distancia != math.inf and elo.nodePai.distancia + elo.distancia < elo.nodeFilho.distancia:
+          return
