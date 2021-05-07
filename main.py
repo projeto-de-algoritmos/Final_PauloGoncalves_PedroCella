@@ -2,62 +2,68 @@ from typing import List
 from utils import graph as g, trabalho as t
 
 
-opcao = 1
-grafo = g.Grafo()
 
+
+isDirectional = True if input("Esse grafo é um grafo bi-direcional (s/n): ") == "s" else False
+
+grafo = g.Grafo(isDirectional)
 nodes = list()
 
-while opcao != 0:
+opcao = "s"
+while opcao != "n": # TODO: Mudar para s/n
 
-  nome = input()
-  
+  nome = input("nome node: ")
   listaTarefas = list()
 
-  LocalizacaoOpcao = 1  
-  i = 0
-  while LocalizacaoOpcao != 0:
+  LocalizacaoOpcao = "s"  
+  while LocalizacaoOpcao != "n":
 
-    nomeTarefa = input().split('\r')[0]
-    ComecoTarefa = float(input())
-    FinalTarefa = float(input())
-    PrioridadeTarefa = float(input())
+    nomeTarefa = input("nome: ").split('\r')[0]
+    ComecoTarefa = float(input("comeco: "))
+    FinalTarefa = float(input("final: "))
+    PrioridadeTarefa = float(input("prioridade: "))
 
     listaTarefas.append(t.trabalho(ComecoTarefa, FinalTarefa, PrioridadeTarefa, nomeTarefa))
-    try:
-      LocalizacaoOpcao = int(input())
-      
-    except ValueError as e:
-      LocalizacaoOpcao = 1
+    
+    LocalizacaoOpcao = input("Continuar colocando tarefas (s/n): ")
 
   grafo.addNode(g.Node(nome, listaTarefas))
-  try:
-      opcao = int(input())
-  except ValueError as e:
-      opcao = 1
+ 
+  opcao = input("Continuar colocando nodes (s/n):")
 
 
-for i in g.nodes:
-  print(f"Escolha em qual node o {i.nome}, se conecta:")
-  opNode = 1
 
-  while opNode == 1:
+for i in grafo.nodes:
+  print(f"Escolha em qual node o {i.nome}, se conecta: ")
+  opNode = "n"
+  while opNode == "n":
+    adjNodes = grafo.getElos(i)
     possiveisEscolhas = list()
-    for index, j in enumerate(g.nodes):
-      if i != j:
+    for index, j in enumerate(grafo.nodes):
+      if i != j and j not in adjNodes:
         possiveisEscolhas.append(index)
         print(f"{index} - {j.nome}")
     nodeEscolhido = -1
-    while nodeEscolhido not in possiveisEscolhas:
-      nodeEscolhido = int(input("Insira o numero do node dejesa colocar a distacia, entre ele e {i.nome}: "))
-    
+    while nodeEscolhido not in possiveisEscolhas and possiveisEscolhas != []:
+      nodeEscolhido = int(input(f"Insira o numero do node dejesa colocar a distacia, entre ele e {i.nome}: "))
+    if possiveisEscolhas != []:
+      distancia = float(input("Insira a distancia: "))
+
+      grafo.addElo(i, grafo.nodes[nodeEscolhido], distancia)
+
+      opNode = input("Deseja parar? (s/n): ")
+    else:
+      opNode = "s"
+
+
 
 
 grafo.getChoices()
 
-
-#  Tem q colocar o localização
-#  Colocar as tarefas dessa localização
-#  Colocar as distancias de cada node
+for tarefas in grafo.choices.final:
+  # print(tarefas)
+  # print(tarefas[0], tarefas[len(tarefas) - 1])
+  print(grafo.getDistance(grafo.tarefasParaNodes.get(tarefas[0]), grafo.tarefasParaNodes.get(tarefas[len(tarefas) - 1])).distancia)
 
 
 

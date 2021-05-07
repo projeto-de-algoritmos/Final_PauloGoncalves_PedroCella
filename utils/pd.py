@@ -8,7 +8,7 @@ class pahtJobs:
 
 class pd:
     def __init__(self, ListaDeTarefas:list) -> None:
-        self.listaDeTarefas = ListaDeTarefas.copy()
+        self.listaDeTarefas = ListaDeTarefas
         self.final = []
 
     def intervalParti(self) -> int:
@@ -41,7 +41,7 @@ class pd:
 
     def intervalSchWei(self):
 
-        for k in range(0, self.intervalParti()): # For para poder repetir X quantidades de vezes nas quais vão ser necessarias, para terminat todas as tarefas.
+        for _ in range(0, self.intervalParti()): # For para poder repetir X quantidades de vezes nas quais vão ser necessarias, para terminat todas as tarefas.
             self.listaDeTarefas.sort(key=lambda x: x.final)
 
             caminhosPossiveis = [] 
