@@ -26,20 +26,20 @@ while opcao != "n":
   while LocalizacaoOpcao != "n":
     cls()
     print(f"Nova tarefa do node {nome}:")
-    nomeTarefa = input("nome: ").split('\r')[0]
-    ComecoTarefa = float(input("comeco: "))
-    FinalTarefa = float(input("final: "))
-    PrioridadeTarefa = float(input("prioridade: "))
+    nomeTarefa = input("Nome da Tarefa: ").split('\r')[0]
+    ComecoTarefa = float(input("Começo da Tarefa: "))
+    FinalTarefa = float(input("Fim da Tarefa: "))
+    PrioridadeTarefa = float(input("Prioridade da Tarefa: "))
 
     listaTarefas.append(t.trabalho(ComecoTarefa, FinalTarefa, PrioridadeTarefa, nomeTarefa))
 
     tabelaDeTarefas[-1].add_row([nomeTarefa, ComecoTarefa, FinalTarefa, PrioridadeTarefa])
 
-    LocalizacaoOpcao = input("Continuar colocando tarefas (s/n): ")
+    LocalizacaoOpcao = input("Deseja continuar colocando tarefas (s/n): ")
 
   grafo.addNode(g.Node(nome, listaTarefas))
  
-  opcao = input("Continuar colocando nodes (s/n):")
+  opcao = input("Deseja continuar colocando nodes (s/n):")
 
 for i in grafo.nodes:
   print(f"Escolha em qual node o {i.nome}, se conecta: ")
@@ -55,7 +55,7 @@ for i in grafo.nodes:
 
   nodeEscolhido = -1
   while nodeEscolhido not in possiveisEscolhas and possiveisEscolhas != []:
-    tmp = input(f"Insira o numero do node dejesa colocar a distacia, entre ele e {i.nome} (numero/nenhum(n)): ").split('\r')[0]
+    tmp = input(f"Insira o número do node que deseja colocar a distâcia, entre ele e {i.nome}, escolha um número ou digite 'n' para nenhum (numero/nenhum(n)): ").split('\r')[0]
     if 'n' == tmp:
       break
     else:
