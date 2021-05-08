@@ -23,7 +23,7 @@ while opcao != "n":
   tabelaDeTarefas.append(PrettyTable(["Nome da Tarefa", "Começo da tarefa", "Termino da tarefa", "Prioridade da Tarefa"]))
 
   LocalizacaoOpcao = "s"  
-  while LocalizacaoOpcao != "n":
+  while LocalizacaoOpcao != "n": # Adicionando as tarefas para o node que foi adicionado.
     cls()
     print(f"Nova tarefa do node {nome}:")
     nomeTarefa = input("Nome da Tarefa: ").split('\r')[0]
@@ -32,15 +32,16 @@ while opcao != "n":
     PrioridadeTarefa = float(input("Prioridade da Tarefa: "))
 
     listaTarefas.append(t.trabalho(ComecoTarefa, FinalTarefa, PrioridadeTarefa, nomeTarefa))
-
-    tabelaDeTarefas[-1].add_row([nomeTarefa, ComecoTarefa, FinalTarefa, PrioridadeTarefa])
+    tabelaDeTarefas[-1].add_row([nomeTarefa, ComecoTarefa, FinalTarefa, PrioridadeTarefa]) # Adicionando uma nova linha para a tabela de tarefas do node
 
     LocalizacaoOpcao = input("Deseja continuar colocando tarefas (s/n): ")
 
-  grafo.addNode(g.Node(nome, listaTarefas))
+  grafo.addNode(g.Node(nome, listaTarefas)) # Adicionando o novo node com a sua respectiva lista de tarefas.
  
   opcao = input("Deseja continuar colocando nodes (s/n):")
 
+
+# Parte para a criação de edges entre os nodes.
 for i in grafo.nodes:
   print(f"Escolha em qual node o {i.nome}, se conecta: ")
 
@@ -71,6 +72,7 @@ grafo.getChoices()
 
 cls()
 
+# Print Final, onde leva em consideração as escolhas de tarefas, e o caminho que vai ser feito para poder executar essas tarefas.
 for index, tabela in enumerate(tabelaDeTarefas):
   print(f"Tarefas do node {grafo.nodes[index].nome}:")
   print(tabela, end="\n\n")
@@ -92,9 +94,9 @@ for index, tarefas in enumerate(grafo.choices.final):
   pathTotal = ",".join(pathTotal)
   if "\n" in pathTotal:
     pathTotal = pathTotal[0: pathTotal.index("\n") + 1] + pathTotal[pathTotal.index("\n") + 2:]
-  if pathTotal == "":
+  if pathTotal == "": # Caso o pathTotal esteja vazio quer dizer que ele não sai para outro node, logo adiciona o proprio node de onde está
     pathTotal = grafo.tarefasParaNodes.get(tarefas[0]).nome
-    
+
   tabela.add_row([",".join([x.nome for x in tarefas]), tarefas[0].comeco, tarefas[-1].final, sum([x.prioridade for x in tarefas]), pathTotal, sum([x.distancia for x in caminhoParaConcluirTarefas])])
   print(f"Para a {index + 1}º escolha de tarefas a serem feitas: ")
   print(tabela)
