@@ -55,7 +55,7 @@ class pd:
         return None
 
     def intervalSchWei(self):   
-        print(self.intervalParti())
+
         for _ in range(0, self.intervalParti()): # For para poder repetir X quantidades de vezes nas quais vão ser necessarias, para terminat todas as tarefas.
             self.listaDeTarefas.sort(key=lambda x: x.final)
 
@@ -84,7 +84,7 @@ class pd:
                     caminhosPossiveis[i].jobs.append(self.listaDeTarefas[i])
 
                 else: # Se não, a nova escolha continua sendo a mesma que a anterior.
-                    caminhosPossiveis[i] = caminhosPossiveis[indexJob]
+                    caminhosPossiveis[i] = caminhosPossiveis[i - 1]
             
             # print([x.nome for x in caminhosPossiveis[len(self.listaDeTarefas) - 1].jobs], "Aki")
             escolhas = list()

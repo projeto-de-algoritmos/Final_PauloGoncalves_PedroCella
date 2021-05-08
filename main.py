@@ -100,8 +100,3 @@ for index, tarefas in enumerate(grafo.choices.final):
   tabela.add_row([",".join([x.nome for x in tarefas]), tarefas[0].comeco, tarefas[-1].final, sum([x.prioridade for x in tarefas]), pathTotal, sum([x.distancia for x in caminhoParaConcluirTarefas])])
   print(f"Para a {index + 1}º escolha de tarefas a serem feitas: ")
   print(tabela)
-
-
-
-
-

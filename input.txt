@@ -1,32 +1,61 @@
 s
-Teste 1
-a
-1
-2
-10
-n
-s
-teste 2
-b
-2
-3
-19
-s
-e
-2
-3
-25
-n
-s
-Teste 3
-c
-3
-4
+Academia
+Malhar
+0
+9
 100
 n
+s
+Faculdade
+Aula de Bancos
+5
+14
+40
+s
+Aula de PA
+15
+20
+120
+s
+Aula de Testes
+21
+26
+70
 n
-2
-25
+s
+Estágio
+Arrumar interface
+10
+35
+15
+s
+Adicionar cliente ao banco
+50
+67
+130
+n
+s
+Casa
+Fazer Trabalho
+0
+30
+200
+s
+Fazer Apresentação
+10
+20
+30
+s
+Dormir
+30
+60
+86
+n
 n
 1
-25
+30
+2
+50
+3
+60
+n
