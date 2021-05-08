@@ -1,0 +1,61 @@
+s
+Academia
+Malhar
+0
+9
+100
+n
+s
+Faculdade
+Aula de Bancos
+5
+14
+40
+s
+Aula de PA
+15
+20
+120
+s
+Aula de Testes
+21
+26
+70
+n
+s
+Estágio
+Arrumar interface
+10
+35
+15
+s
+Adicionar cliente ao banco
+50
+67
+130
+n
+s
+Casa
+Fazer Trabalho
+0
+30
+200
+s
+Fazer Apresentação
+10
+20
+30
+s
+Dormir
+30
+60
+86
+n
+n
+1
+30
+2
+50
+3
+60
+n
