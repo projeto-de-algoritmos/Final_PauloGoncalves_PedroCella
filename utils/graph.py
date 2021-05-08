@@ -82,7 +82,8 @@ class Grafo:
     for node in self.nodes:
       node.distancia = math.inf
       node.path = list()
-    
+      
+    nodeB.path.append(nodeA)
     self.bellmanFord(nodeA)
 
     nodeB.path.append(nodeB)
@@ -103,7 +104,7 @@ class Grafo:
         if elo.nodePai.distancia != math.inf and elo.nodePai.distancia + elo.distancia < elo.nodeFilho.distancia:
           elo.nodeFilho.distancia = elo.nodePai.distancia + elo.distancia
           elo.nodeFilho.path += elo.nodePai.path
-          elo.nodeFilho.path.append(elo.nodePai)
+
 
     for _ in range(len(self.nodes) - 1):
       for elo in self.elos:

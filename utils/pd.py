@@ -9,6 +9,7 @@ class pahtJobs:
 class pd:
     def __init__(self, ListaDeTarefas:list) -> None:
         self.listaDeTarefas = ListaDeTarefas
+        print(self.listaDeTarefas)
         self.final = []
 
     def intervalParti(self) -> int:
@@ -34,13 +35,27 @@ class pd:
         """
         Função para retornar o indice, da maior tarefa que é compativel com o indice inicial.
         """
-        for i in range(index, -1, -1):
-            if self.listaDeTarefas[i].final <= self.listaDeTarefas[index].comeco:
-                return i
+        esq = 0
+        dire = index - 1
+
+
+
+        while esq <= dire:
+            meio = np.right_shift(dire + esq, 1)
+
+            if self.listaDeTarefas[meio].final <= self.listaDeTarefas[index].comeco:
+                if self.listaDeTarefas[meio + 1].final <= self.listaDeTarefas[index].comeco:
+                    esq = meio + 1
+                else:
+
+                    return meio
+            else:
+                dire = meio - 1
+
         return None
 
-    def intervalSchWei(self):
-
+    def intervalSchWei(self):   
+        print(self.intervalParti())
         for _ in range(0, self.intervalParti()): # For para poder repetir X quantidades de vezes nas quais vão ser necessarias, para terminat todas as tarefas.
             self.listaDeTarefas.sort(key=lambda x: x.final)
 
@@ -52,7 +67,7 @@ class pd:
             # Set da primeira escolha sendo o primeiro trabalho.
             caminhosPossiveis[0].total = self.listaDeTarefas[0].prioridade
             caminhosPossiveis[0].jobs.append(self.listaDeTarefas[0])
-
+            
             for i in range(1, len(self.listaDeTarefas)):
 
                 tmpTotal = self.listaDeTarefas[i].prioridade # A prioridade temporaria
@@ -62,20 +77,23 @@ class pd:
                     tmpTotal += caminhosPossiveis[indexJob].total
 
                 if tmpTotal > caminhosPossiveis[i - 1].total: # Caso a nova prioridade seja maior que a escolha anterior.
-                    caminhosPossiveis[i].total = tmpTotal
-
                     if indexJob != None: 
-                        caminhosPossiveis[i].jobs = caminhosPossiveis[indexJob].jobs
-
+                        caminhosPossiveis[i].jobs = caminhosPossiveis[indexJob].jobs.copy()
+                        
+                    caminhosPossiveis[i].total = tmpTotal
                     caminhosPossiveis[i].jobs.append(self.listaDeTarefas[i])
 
                 else: # Se não, a nova escolha continua sendo a mesma que a anterior.
-                    caminhosPossiveis[i] = caminhosPossiveis[i - 1]
-
+                    caminhosPossiveis[i] = caminhosPossiveis[indexJob]
+            
+            # print([x.nome for x in caminhosPossiveis[len(self.listaDeTarefas) - 1].jobs], "Aki")
             escolhas = list()
             for i, obj in enumerate(caminhosPossiveis[len(self.listaDeTarefas) - 1].jobs): # Retirando as tarefas ja escolhidas.
                 escolhas.append(self.listaDeTarefas.pop(self.listaDeTarefas.index(obj)))
-
+            # print([x.nome for x in escolhas])
             self.final.append(escolhas)
-
+   
         return self.final # Return [[tarefa, tarefa], [tarefa], [tarefa, tarefa], [tarefa, tarefa]]
+
+
+# print([x.nome for x in op.final])

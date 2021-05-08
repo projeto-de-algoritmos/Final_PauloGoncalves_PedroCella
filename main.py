@@ -90,8 +90,9 @@ for index, tarefas in enumerate(grafo.choices.final):
     pathTotal.append("\n")
   
   pathTotal = ",".join(pathTotal)
-  pathTotal = pathTotal[0: pathTotal.index("\n") + 1] + pathTotal[pathTotal.index("\n") + 2:]
-  
+  if "\n" in pathTotal:
+    pathTotal = pathTotal[0: pathTotal.index("\n") + 1] + pathTotal[pathTotal.index("\n") + 2:]
+
   tabela.add_row([",".join([x.nome for x in tarefas]), tarefas[0].comeco, tarefas[-1].final, sum([x.prioridade for x in tarefas]), pathTotal, sum([x.distancia for x in caminhoParaConcluirTarefas])])
   print(f"Para a {index + 1}º escolha de tarefas a serem feitas: ")
   print(tabela)
