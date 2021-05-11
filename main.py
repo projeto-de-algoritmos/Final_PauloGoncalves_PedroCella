@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 import copy as cp
-from utils import graph as g, trabalho as t
+from utils import graph as g, trabalho as t, printgraph as pg
 
 import os
 
@@ -69,6 +69,7 @@ for i in grafo.nodes:
 
 
 grafo.getChoices()
+pg.printGraph(grafo, titulo='Grafo', output='img_graph.png')
 
 cls()
 
@@ -97,6 +98,20 @@ for index, tarefas in enumerate(grafo.choices.final):
   if pathTotal == "": # Caso o pathTotal esteja vazio quer dizer que ele não sai para outro node, logo adiciona o proprio node de onde está
     pathTotal = grafo.tarefasParaNodes.get(tarefas[0]).nome
 
-  tabela.add_row([",".join([x.nome for x in tarefas]), tarefas[0].comeco, tarefas[-1].final, sum([x.prioridade for x in tarefas]), pathTotal, sum([x.distancia for x in caminhoParaConcluirTarefas])])
+  pathTotal = pathTotal.replace('\n,', '\n')
+
+  tmpTarefas = list()
+  if len([x.nome for x in tarefas]) > 5:
+    for i, x in enumerate([y.nome for y in tarefas]):
+      tmpTarefas += [y.nome for y in tarefas][i:i+2] + ['\n']
+  else:
+    tmpTarefas = [x.nome for x in tarefas]
+  tmpTarefas = ",".join(tmpTarefas).replace('\n,', '\n')
+
+  tabela.add_row([tmpTarefas, tarefas[0].comeco, tarefas[-1].final, sum([x.prioridade for x in tarefas]), pathTotal, sum([x.distancia for x in caminhoParaConcluirTarefas])])
   print(f"Para a {index + 1}º escolha de tarefas a serem feitas: ")
   print(tabela)
+
+  # print grafo com caminho
+  visitados = [x.nome for x in tarefas] + pathTotal.split(',')
+  pg.printGraph(grafo, visitados, titulo='Caminho ' + str(index + 1), output='img_path_' + str(index) + ".png")

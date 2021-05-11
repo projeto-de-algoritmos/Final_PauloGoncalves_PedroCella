@@ -9,7 +9,6 @@ class pahtJobs:
 class pd:
     def __init__(self, ListaDeTarefas:list) -> None:
         self.listaDeTarefas = ListaDeTarefas
-        print(self.listaDeTarefas)
         self.final = []
 
     def intervalParti(self) -> int:
